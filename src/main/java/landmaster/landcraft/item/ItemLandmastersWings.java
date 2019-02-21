@@ -111,6 +111,7 @@ public class ItemLandmastersWings extends ItemEnergyBase {
 		final EntityPlayer player = event.player;
 		final ItemStack stack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
 		boolean isCurrentlyWearingArmor = stack.getItem() instanceof ItemLandmastersWings;
+		boolean oldAllowFlying = player.capabilities.allowFlying, oldIsFlying = player.capabilities.isFlying;
 		if (!player.isCreative() && !player.isSpectator()
 				&& isCurrentlyWearingArmor) {
 			playersThatHadWornArmor.add(player);
@@ -134,7 +135,9 @@ public class ItemLandmastersWings extends ItemEnergyBase {
 			player.capabilities.allowFlying = true;
 		}
 		//if (player.ticksExisted % 5 == 0) System.out.println(player.capabilities.allowFlying);
-		player.sendPlayerAbilities();
+		if (player.capabilities.allowFlying != oldAllowFlying || player.capabilities.isFlying != oldIsFlying) {
+			player.sendPlayerAbilities();
+		}
 	}
 	
 	@SidedProxy(serverSide = "landmaster.landcraft.item.ItemLandmastersWings$Proxy", clientSide = "landmaster.landcraft.item.ItemLandmastersWings$ProxyClient")
