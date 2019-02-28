@@ -146,6 +146,8 @@ info.breeder.product=Spare output: %d
 info.breeder.jei.temp=Temperature threshold: %s
 info.breeder.jei.product=Output (in 1/16 of a thorium ingot): %d
 
+info.pot.jei.energy_and_time=%d RF/t (%d t)
+
 # TOOLTIPS
 
 tooltip.landia_portal_marker.info=§bOnce placed, activate by killing an undead mob in the vicinity.

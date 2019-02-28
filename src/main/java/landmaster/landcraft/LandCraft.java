@@ -48,6 +48,7 @@ public class LandCraft {
 	@SidedProxy(serverSide = "landmaster.landcraft.proxy.CommonProxy", clientSide = "landmaster.landcraft.proxy.ClientProxy")
 	public static CommonProxy proxy;
 	
+	@SuppressWarnings("deprecation") // Due to the fact that LandCraft was ported to 1.12 extremely early, the ResourceLocation overload of registerTileEntity did not exist yet. Unfortunately, Forge does not provide a good way of migrating to the new method.
 	@SubscribeEvent
 	public static void addBlocks(RegistryEvent.Register<Block> event) {
 		event.getRegistry().register(LandCraftContent.landia_portal_marker);
@@ -90,18 +91,22 @@ public class LandCraft {
 		
 		if (Config.breeder) {
 			event.getRegistry().register(LandCraftContent.breeder);
+			GameRegistry.registerTileEntity(TEBreeder.class, ModInfo.MODID+"_breeder_reactor");
 		}
 		
 		if (Config.player_mime) {
 			event.getRegistry().register(LandCraftContent.player_mime);
+			GameRegistry.registerTileEntity(TEPlayerMime.class, ModInfo.MODID+"_player_mime");
 		}
 		
 		if (Config.thorium_generator) {
 			event.getRegistry().register(LandCraftContent.thorium_generator);
+			GameRegistry.registerTileEntity(TEThoriumGenerator.class, ModInfo.MODID+"_thorium_generator");
 		}
 		
 		if (Config.pot) {
 			event.getRegistry().register(LandCraftContent.pot);
+			GameRegistry.registerTileEntity(TEPot.class, ModInfo.MODID+"_pot");
 		}
 		
 		event.getRegistry().register(LandCraftContent.landia_ore);
@@ -210,7 +215,7 @@ public class LandCraft {
 			Block block = LandCraftContent.landia_wood_stairs.get(type);
 			ItemBlock ib = new ItemBlock(block);
 			event.getRegistry().register(ib.setRegistryName(block.getRegistryName()));
-			proxy.registerItemRenderer(ib, 0, block.getRegistryName().getResourcePath());
+			proxy.registerItemRenderer(ib, 0, block.getRegistryName().getPath());
 			OreDictionary.registerOre("stairWood", block);
 		}
 		
@@ -218,28 +223,24 @@ public class LandCraft {
 			ItemBlock breeder_item = new ItemBlock(LandCraftContent.breeder);
 			event.getRegistry().register(breeder_item.setRegistryName(LandCraftContent.breeder.getRegistryName()));
 			proxy.registerItemRenderer(breeder_item, 0, "breeder");
-			GameRegistry.registerTileEntity(TEBreeder.class, ModInfo.MODID+"_breeder_reactor");
 		}
 		
 		if (Config.player_mime) {
 			ItemBlock player_mime_item = new ItemBlock(LandCraftContent.player_mime);
 			event.getRegistry().register(player_mime_item.setRegistryName(LandCraftContent.player_mime.getRegistryName()));
 			proxy.registerItemRenderer(player_mime_item, 0, "player_mime");
-			GameRegistry.registerTileEntity(TEPlayerMime.class, ModInfo.MODID+"_player_mime");
 		}
 		
 		if (Config.thorium_generator) {
 			ItemBlock thorium_generator_item = new ItemBlock(LandCraftContent.thorium_generator);
 			event.getRegistry().register(thorium_generator_item.setRegistryName(LandCraftContent.thorium_generator.getRegistryName()));
 			proxy.registerItemRenderer(thorium_generator_item, 0, "thorium_generator");
-			GameRegistry.registerTileEntity(TEThoriumGenerator.class, ModInfo.MODID+"_thorium_generator");
 		}
 		
 		if (Config.pot) {
 			ItemBlock pot_item = new ItemBlock(LandCraftContent.pot);
 			event.getRegistry().register(pot_item.setRegistryName(LandCraftContent.pot.getRegistryName()));
 			proxy.registerItemRenderer(pot_item, 0, "pot");
-			GameRegistry.registerTileEntity(TEPot.class, ModInfo.MODID+"_pot");
 		}
 		
 		if (Config.wrench) {
@@ -252,7 +253,7 @@ public class LandCraft {
 		ItemBlock landia_ore_item = new ItemBlockMeta(LandCraftContent.landia_ore);
 		event.getRegistry().register(landia_ore_item.setRegistryName(LandCraftContent.landia_ore.getRegistryName()));
 		for (int i=0; i<oreValues.length; ++i) {
-			proxy.registerItemRenderer(landia_ore_item, i, LandCraftContent.landia_ore.getRegistryName().getResourcePath(), "type="+oreValues[i]);
+			proxy.registerItemRenderer(landia_ore_item, i, LandCraftContent.landia_ore.getRegistryName().getPath(), "type="+oreValues[i]);
 			OreDictionary.registerOre("ore"+StringUtils.capitalize(oreValues[i].toString()),
 					new ItemStack(LandCraftContent.landia_ore, 1, i));
 		}
@@ -260,7 +261,7 @@ public class LandCraft {
 		ItemBlock landia_metal_item = new ItemBlockMeta(LandCraftContent.landia_metal);
 		event.getRegistry().register(landia_metal_item.setRegistryName(LandCraftContent.landia_metal.getRegistryName()));
 		for (int i=0; i<oreValues.length; ++i) {
-			proxy.registerItemRenderer(landia_metal_item, i, LandCraftContent.landia_metal.getRegistryName().getResourcePath(), "type="+oreValues[i]);
+			proxy.registerItemRenderer(landia_metal_item, i, LandCraftContent.landia_metal.getRegistryName().getPath(), "type="+oreValues[i]);
 			OreDictionary.registerOre("block"+StringUtils.capitalize(oreValues[i].toString()),
 					new ItemStack(LandCraftContent.landia_metal, 1, i));
 		}

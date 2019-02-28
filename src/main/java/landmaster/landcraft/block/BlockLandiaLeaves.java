@@ -26,7 +26,7 @@ public class BlockLandiaLeaves extends BlockLeaves implements IMetaBlockName {
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(CHECK_DECAY, false)
 				.withProperty(DECAYABLE, true));
-		this.setUnlocalizedName("landia_leaves").setRegistryName("landia_leaves");
+		this.setTranslationKey("landia_leaves").setRegistryName("landia_leaves");
 		this.useNeighborBrightness = true;
 	}
 	
@@ -43,6 +43,7 @@ public class BlockLandiaLeaves extends BlockLeaves implements IMetaBlockName {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return Blocks.LEAVES.isOpaqueCube(state);
@@ -51,16 +52,17 @@ public class BlockLandiaLeaves extends BlockLeaves implements IMetaBlockName {
 	@Nonnull
 	@SideOnly(Side.CLIENT)
 	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return Blocks.LEAVES.getBlockLayer();
+	public BlockRenderLayer getRenderLayer() {
+		return Blocks.LEAVES.getRenderLayer();
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean shouldSideBeRendered(@Nonnull IBlockState blockState, @Nonnull IBlockAccess blockAccess,
 			@Nonnull BlockPos pos, @Nonnull EnumFacing side) {
 		// isOpaqueCube returns !leavesFancy to us. We have to fix the variable
 		// before calling super
-		this.leavesFancy = !Blocks.LEAVES.isOpaqueCube(blockState);
+		this.leavesFancy = !blockState.isOpaqueCube();
 		
 		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 	}

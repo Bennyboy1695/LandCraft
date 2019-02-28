@@ -25,6 +25,7 @@ import net.minecraft.util.text.*;
 import net.minecraft.world.*;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.*;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -37,7 +38,7 @@ public class ItemLandmastersWings extends ItemEnergyBase {
 	public ItemLandmastersWings() {
 		super(MAX_ENERGY, MAX_ENERGY, MAX_ENERGY);
 		this.maxStackSize = 1;
-		this.setUnlocalizedName("landmasters_wings").setRegistryName("landmasters_wings");
+		this.setTranslationKey("landmasters_wings").setRegistryName("landmasters_wings");
 		this.setCreativeTab(LandCraftContent.creativeTab);
 		
 		proxy.initEvents();
@@ -137,6 +138,18 @@ public class ItemLandmastersWings extends ItemEnergyBase {
 		//if (player.ticksExisted % 5 == 0) System.out.println(player.capabilities.allowFlying);
 		if (player.capabilities.allowFlying != oldAllowFlying || player.capabilities.isFlying != oldIsFlying) {
 			player.sendPlayerAbilities();
+		}
+	}
+	
+	@SubscribeEvent
+    public static void breakSpeed(PlayerEvent.BreakSpeed e) {
+		EntityPlayer p = e.getEntityPlayer();
+		if (!p.onGround && p.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() instanceof ItemLandmastersWings) {
+			float oldSpeed = e.getOriginalSpeed();
+			float newSpeed = e.getNewSpeed();
+			if (oldSpeed < newSpeed*5) {
+				e.setNewSpeed(newSpeed * 5);
+			}
 		}
 	}
 	
