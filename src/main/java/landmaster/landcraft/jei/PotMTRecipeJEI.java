@@ -23,7 +23,7 @@ public class PotMTRecipeJEI extends PotRecipeJEI {
 	public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
 		minecraft.fontRenderer.drawString(TextFormatting.DARK_RED.toString()+TextFormatting.BOLD
 				+I18n.format("info.pot.jei.energy_and_time", prc.out.energyPerTick, prc.out.time),
-				70, 58, 0x000000);
+				65, 58, 0x000000);
 	}
 	
 	@Override
