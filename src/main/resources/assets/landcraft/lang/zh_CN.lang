@@ -71,7 +71,7 @@ tile.breeder.name=增殖反应堆
 tile.player_mime.name=玩家击杀模拟器
 tile.thorium_generator.name=钍反应堆
 tile.landia_portal_marker.name=兰迪亚传送门标记器
-tile.pot.name=储罐
+tile.pot.name=炉灶
 
 item.item_wrench.name=扳手
 
