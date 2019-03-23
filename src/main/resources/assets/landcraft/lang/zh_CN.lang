@@ -144,7 +144,7 @@ info.breeder.temp=温度.: %s/%s
 info.breeder.product=剩余输出: %d
 
 info.breeder.jei.temp=临界温度: %s
-info.breeder.jei.product=输出(一个钍锭的16分之一): %d
+info.breeder.jei.product=输出(一个钍锭的32分之一): %d
 
 info.pot.jei.energy_and_time=%d RF/t (%d t)
 

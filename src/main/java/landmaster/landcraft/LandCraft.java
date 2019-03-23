@@ -92,6 +92,9 @@ public class LandCraft {
 		if (Config.breeder) {
 			event.getRegistry().register(LandCraftContent.breeder);
 			GameRegistry.registerTileEntity(TEBreeder.class, ModInfo.MODID+"_breeder_reactor");
+			
+			event.getRegistry().register(LandCraftContent.temperature_detector);
+			GameRegistry.registerTileEntity(TETemperatureDetector.class, new ResourceLocation(ModInfo.MODID, "temperature_detector"));
 		}
 		
 		if (Config.player_mime) {
@@ -223,6 +226,11 @@ public class LandCraft {
 			ItemBlock breeder_item = new ItemBlock(LandCraftContent.breeder);
 			event.getRegistry().register(breeder_item.setRegistryName(LandCraftContent.breeder.getRegistryName()));
 			proxy.registerItemRenderer(breeder_item, 0, "breeder");
+			
+			ItemBlock temperature_detector_item = new ItemBlockTemperatureDetector(LandCraftContent.temperature_detector);
+			event.getRegistry().register(temperature_detector_item
+					.setRegistryName(LandCraftContent.temperature_detector.getRegistryName()));
+			proxy.registerItemRenderer(temperature_detector_item, 0, "temperature_detector");
 		}
 		
 		if (Config.player_mime) {
@@ -435,6 +443,15 @@ public class LandCraft {
 					'd', "gemDiamond", 'F', Blocks.FURNACE,
 					'l', "ingotLandium")
 					.setRegistryName(LandCraftContent.breeder.getRegistryName()));
+			
+			event.getRegistry().register(new ShapedOreRecipe(LandCraftContent.temperature_detector.getRegistryName(),
+					LandCraftContent.temperature_detector,
+					"igi", "rFr", "hqh",
+					'i', "ingotIron", 'g', "ingotGold",
+					'r', LandCraftContent.redstone_component,
+					'F', Blocks.FURNACE, 'h', "ingotThorium",
+					'q', "gemQuartz")
+					.setRegistryName(LandCraftContent.temperature_detector.getRegistryName()));
 		}
 		
 		if (Config.player_mime) {

@@ -26,6 +26,7 @@ public class LandCraftContent {
 	
 	// MACHINES
 	public static final BlockBreeder breeder = new BlockBreeder();
+	public static final BlockTemperatureDetector temperature_detector = new BlockTemperatureDetector();
 	public static final BlockPlayerMime player_mime = new BlockPlayerMime();
 	public static final BlockThoriumGenerator thorium_generator = new BlockThoriumGenerator();
 	public static final BlockPot pot = new BlockPot();
