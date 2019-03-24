@@ -81,7 +81,7 @@ public class BlockTemperatureDetector extends BlockMachineBase {
 				TEBreeder breeder = (TEBreeder)auxTE;
 				int convertedTemp = (int)breeder.getTemp();
 				if (side.getHorizontalIndex() >= 0) {
-					return (convertedTemp >> (side.getHorizontalIndex()*4)) & 0x10;
+					return (convertedTemp >> (side.getHorizontalIndex()*4)) & 0xF;
 				}
 			}
 		}
