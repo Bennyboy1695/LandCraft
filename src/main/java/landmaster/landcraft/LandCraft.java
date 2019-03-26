@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.*;
 
 import landmaster.landcore.api.*;
 import landmaster.landcore.api.item.*;
@@ -19,6 +20,7 @@ import landmaster.landcraft.util.*;
 import landmaster.landcraft.world.*;
 import landmaster.landcraft.world.gen.*;
 import net.minecraft.block.*;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -26,6 +28,7 @@ import net.minecraft.item.crafting.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+import net.minecraftforge.client.model.obj.*;
 import net.minecraftforge.common.util.*;
 import net.minecraftforge.event.*;
 import net.minecraftforge.fluids.*;
@@ -56,6 +59,10 @@ public class LandCraft {
 		
 		event.getRegistry().register(LandCraftContent.landia_tower);
 		GameRegistry.registerTileEntity(TELandiaTower.class, ModInfo.MODID+"_landia_tower");
+		
+		event.getRegistry().register(LandCraftContent.landia_altar);
+		GameRegistry.registerTileEntity(TELandiaAltarCore.class, new ResourceLocation(ModInfo.MODID, "landia_altar_core"));
+		GameRegistry.registerTileEntity(TELandiaAltarPedestal.class, new ResourceLocation(ModInfo.MODID, "landia_altar_pedestal"));
 		
 		event.getRegistry().register(LandCraftContent.wild_onion);
 		event.getRegistry().register(LandCraftContent.onion_crop);
@@ -137,6 +144,12 @@ public class LandCraft {
 		};
 		event.getRegistry().register(landia_tower_item.setRegistryName(LandCraftContent.landia_tower.getRegistryName()));
 		proxy.registerItemRenderer(landia_tower_item, 0, "landia_tower");
+		
+		ItemBlock landia_altar_item = new ItemBlockMeta(LandCraftContent.landia_altar);
+		event.getRegistry().register(landia_altar_item.setRegistryName(LandCraftContent.landia_altar.getRegistryName()));
+		for (BlockLandiaAltar.Part part: BlockLandiaAltar.Part.values()) {
+			proxy.registerItemRenderer(landia_altar_item, part.ordinal(), LandCraftContent.landia_altar.getRegistryName().getPath(), "part="+part.getName());
+		}
 		
 		event.getRegistry().register(LandCraftContent.redstone_component);
 		proxy.registerItemRenderer(LandCraftContent.redstone_component, 0, "redstone_component");
@@ -309,6 +322,8 @@ public class LandCraft {
 		(config = new Config(event)).sync();
 		LCLog.log = event.getModLog();
 		
+		OBJLoader.INSTANCE.addDomain(ModInfo.MODID);
+		
 		proxy.initEntities();
 		
 		proxy.bindTESRs();
@@ -330,6 +345,16 @@ public class LandCraft {
 	
 	@SubscribeEvent
 	public static void addRecipes(RegistryEvent.Register<IRecipe> event) {
+		LandiaAltarRecipes.addEntityTriggerRecipe(new LandiaAltarRecipes.StandardAltarRecipeEntityDeathTrigger(
+				Pair.of(new ItemStack(Items.NETHER_STAR), 2),
+				ItemStackEquivs.EQUAL_ITEMS,
+				Arrays.asList(
+						ItemStackEquivs.equalItemsList(new ItemStack(LandCraftContent.pho, 1, 1)),
+						ItemStackEquivs.equalItemsList(new ItemStack(LandCraftContent.bun_rieu, 1, 1))
+						),
+				EntityZombie.class
+				));
+		
 		BreederFeedstock.addOreDict("ingotIron", 16, 200);
 		BreederFeedstock.addOreDict("ingotTungsten", 64, 1000);
 		BreederFeedstock.addOreDict("ingotLandium", 100, 1200);

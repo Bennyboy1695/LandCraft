@@ -23,7 +23,7 @@ public class PacketUpdateTE implements IMessage {
 	public static IMessage onMessage(PacketUpdateTE message, MessageContext ctx) {
 		Minecraft.getMinecraft().addScheduledTask(() -> {
 			try {
-				if (message.coord.dimensionId == Minecraft.getMinecraft().world.provider.getDimension()) {
+				if (Minecraft.getMinecraft().world != null && message.coord.dimensionId == Minecraft.getMinecraft().world.provider.getDimension()) {
 					TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.coord.pos());
 					Optional.ofNullable(PacketHandler.handle(te, message.storedBuf, ctx))
 					.ifPresent(PacketHandler.INSTANCE::sendToServer);

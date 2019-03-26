@@ -17,6 +17,7 @@ import net.minecraft.block.state.*;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
+import net.minecraft.client.renderer.tileentity.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.client.event.*;
@@ -50,6 +51,10 @@ public class ClientProxy extends CommonProxy {
 	public void bindTESRs() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TELandiaPortalMarker.class, new TESRLandiaPortalMarker());
 		ClientRegistry.bindTileEntitySpecialRenderer(TELandiaTower.class, new TESRLandiaTower());
+		
+		TileEntitySpecialRenderer<? super TELandiaAltarItemHolder> alterHolderTESR = new TESRLandiaAltarItemHolder();
+		ClientRegistry.bindTileEntitySpecialRenderer(TELandiaAltarCore.class, alterHolderTESR);
+		ClientRegistry.bindTileEntitySpecialRenderer(TELandiaAltarPedestal.class, alterHolderTESR);
 	}
 	
 	@Override

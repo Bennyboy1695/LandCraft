@@ -1,0 +1,13 @@
+# Blender MTL File: 'landia_altar_base.blend'
+# Material Count: 1
+
+newmtl Core
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.574510 0.574510 0.574510
+Ks 0.000000 0.045373 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.558824
+illum 2
+map_Kd landcraft:blocks/landia_altar_core

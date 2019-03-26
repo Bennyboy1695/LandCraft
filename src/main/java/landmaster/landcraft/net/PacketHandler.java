@@ -27,5 +27,7 @@ public class PacketHandler {
 	static {
 		INSTANCE.registerMessage(PacketUpdateTE::onMessage, PacketUpdateTE.class, 0, Side.CLIENT);
 		INSTANCE.registerMessage(PacketRequestUpdateTELandiaTower::onMessage, PacketRequestUpdateTELandiaTower.class, 1, Side.SERVER);
+		INSTANCE.registerMessage(PacketUpdateLandiaAltarItemHolder::onMessage, PacketUpdateLandiaAltarItemHolder.class, 2, Side.CLIENT);
+		INSTANCE.registerMessage(PacketRequestUpdateLandiaAltarItemHolder::onMessage, PacketRequestUpdateLandiaAltarItemHolder.class, 3, Side.SERVER);
 	}
 }

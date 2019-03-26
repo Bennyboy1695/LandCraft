@@ -22,7 +22,9 @@ public class LandCraftContent {
 		}
 	};
 	
+	// RITUALS
 	public static final BlockLandiaTower landia_tower = new BlockLandiaTower();
+	public static final BlockLandiaAltar landia_altar = new BlockLandiaAltar();
 	
 	// MACHINES
 	public static final BlockBreeder breeder = new BlockBreeder();

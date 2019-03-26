@@ -6,6 +6,9 @@ entity.wizard_magic_fireball.name=Magic Fireball
 entity.zombie_crabman.name=Zombie Crabman
 
 tile.landia_tower.name=Tower of Landia
+tile.landia_altar.core.name=Altar Core
+tile.landia_altar.material.name=Altar Material
+tile.landia_altar.pedestal.name=Altar Pedestal
 
 msg.landia_tower.check.0=Make these towers %d blocks high and %d meters from the master:
 msg.landia_tower.check.1=To the north, the §bFriscia§r...
