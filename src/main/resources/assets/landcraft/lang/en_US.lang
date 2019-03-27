@@ -6,6 +6,7 @@ entity.wizard_magic_fireball.name=Magic Fireball
 entity.zombie_crabman.name=Zombie Crabman
 
 tile.landia_tower.name=Tower of Landia
+landcraft.altar.name=Altar of Landia
 tile.landia_altar.core.name=Altar Core
 tile.landia_altar.material.name=Altar Material
 tile.landia_altar.pedestal.name=Altar Pedestal
@@ -153,6 +154,8 @@ info.breeder.jei.temp=Temperature threshold: %s
 info.breeder.jei.product=Output (in 1/32 of a thorium ingot): %d
 
 info.pot.jei.energy_and_time=%d RF/t (%d t)
+
+info.altar.jei.death_trigger=(Kill a(n) %s)
 
 # TOOLTIPS
 

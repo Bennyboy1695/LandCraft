@@ -9,6 +9,7 @@ import com.google.common.base.*;
 
 import landmaster.landcraft.tile.*;
 import landmaster.landcraft.util.*;
+import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
@@ -17,6 +18,8 @@ import net.minecraftforge.items.*;
 
 public class LandiaAltarRecipes {
 	public static final int ENTITY_DEATH_TRIGGER_RANGE = 5;
+	
+	public static int MAX_ITEMS = 10;
 	
 	static {
 		MinecraftForge.EVENT_BUS.register(LandiaAltarRecipes.class);
@@ -31,6 +34,8 @@ public class LandiaAltarRecipes {
 		 */
 		Pair<ItemStack, Integer> process(TELandiaAltarCore altarCore, List<ItemStack> candidates);
 		
+		int getMaxNumItems();
+		
 		Collection<Pair<ItemStack, Integer>> possibleOutputs();
 	}
 	
@@ -42,9 +47,9 @@ public class LandiaAltarRecipes {
 		public final Pair<ItemStack, Integer> output;
 		public final Equivalence<ItemStack> equiv;
 		public final List<Collection<Equivalence.Wrapper<ItemStack>>> stackMatchList;
-		public final Class<?> entityClass;
+		public final Class<? extends EntityLivingBase> entityClass;
 		
-		public StandardAltarRecipeEntityDeathTrigger(Pair<ItemStack, Integer> output, Equivalence<ItemStack> equiv, List<Collection<Equivalence.Wrapper<ItemStack>>> stackMatchList, Class<?> entityClass) {
+		public StandardAltarRecipeEntityDeathTrigger(Pair<ItemStack, Integer> output, Equivalence<ItemStack> equiv, List<Collection<Equivalence.Wrapper<ItemStack>>> stackMatchList, Class<?  extends EntityLivingBase> entityClass) {
 			this.output = output;
 			this.equiv = equiv;
 			this.stackMatchList = stackMatchList;
@@ -84,6 +89,11 @@ public class LandiaAltarRecipes {
 		public boolean shouldWork(LivingDeathEvent event) {
 			return entityClass.isInstance(event.getEntityLiving());
 		}
+
+		@Override
+		public int getMaxNumItems() {
+			return stackMatchList.size();
+		}
 		
 	}
 	
@@ -101,6 +111,9 @@ public class LandiaAltarRecipes {
 		for (TELandiaAltarCore te: Utils.getTileEntitiesWithinAABB(event.getEntity().world, TELandiaAltarCore.class,
 				Utils.AABBfromVecs(event.getEntity().getPositionVector().subtract(ENTITY_DEATH_TRIGGER_RANGE, ENTITY_DEATH_TRIGGER_RANGE, ENTITY_DEATH_TRIGGER_RANGE),
 						event.getEntity().getPositionVector().add(ENTITY_DEATH_TRIGGER_RANGE, ENTITY_DEATH_TRIGGER_RANGE, ENTITY_DEATH_TRIGGER_RANGE)))) {
+			if (!te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(0).isEmpty()) {
+				continue;
+			}
 			TELandiaAltarCore.PedestalResult pedRes = te.getPedestals();
 			List<ItemStack> stacks = pedRes.pedestals.stream()
 					.map(tePed -> tePed.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null))

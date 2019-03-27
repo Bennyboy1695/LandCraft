@@ -23,6 +23,7 @@ public class LandCraftJEI implements IModPlugin {
 		if (Config.pot) {
 			registry.addRecipeCategories(new PotRecipeCategory(guiHelper));
 		}
+		registry.addRecipeCategories(new LandiaAltarRecipeCategory(guiHelper));
 	}
 	
 	@Override
@@ -34,7 +35,7 @@ public class LandCraftJEI implements IModPlugin {
 		if (Config.breeder) {
 			registry.handleRecipes(BreederFeedstock.OreMassTempTri.class, BreederFeedstockJEI::new, BreederFeedstockCategory.UID);
 			registry.addRecipes(BreederFeedstock.getOreMassTempTris(), BreederFeedstockCategory.UID);
-			recipeTransferRegistry.addRecipeTransferHandler(ContTEBreeder.class, BreederFeedstockCategory.UID, 0, 1, 3, 36);
+			//recipeTransferRegistry.addRecipeTransferHandler(ContTEBreeder.class, BreederFeedstockCategory.UID, 0, 1, 3, 36);
 			registry.addRecipeCatalyst(new ItemStack(LandCraftContent.breeder), BreederFeedstockCategory.UID);
 		}
 		
@@ -47,6 +48,11 @@ public class LandCraftJEI implements IModPlugin {
 			recipeTransferRegistry.addRecipeTransferHandler(ContTEPot.class, PotRecipeCategory.UID, 0, 3, 4, 36);
 			registry.addRecipeCatalyst(new ItemStack(LandCraftContent.pot), PotRecipeCategory.UID);
 		}
+		
+		registry.handleRecipes(LandiaAltarRecipes.StandardAltarRecipeEntityDeathTrigger.class,
+				StandardAltarRecipeEntityDeathTriggerJEI::new, LandiaAltarRecipeCategory.UID);
+		registry.addRecipes(LandiaAltarRecipes.getEntityTriggerList(), LandiaAltarRecipeCategory.UID);
+		registry.addRecipeCatalyst(new ItemStack(LandCraftContent.landia_altar), LandiaAltarRecipeCategory.UID);
 	}
 	
 	private static class CraftTweaker {
