@@ -3,12 +3,18 @@ package landmaster.landcraft.tile;
 import java.util.*;
 
 import landmaster.landcraft.block.*;
+import landmaster.landcraft.config.*;
 import net.minecraft.block.state.*;
 import net.minecraft.tileentity.*;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.world.*;
+import net.minecraftforge.fml.relauncher.*;
 
-public class TELandiaAltarCore extends TELandiaAltarItemHolder {
+public class TELandiaAltarCore extends TELandiaAltarItemHolder implements ITickable {
 	public static int MAX_PYRAMID_SIZE = 8;
+	
+	private boolean oldDoRenderBeam = doRenderBeam();
 	
 	public static class PedestalResult {
 		public final int pyramidSize;
@@ -20,12 +26,20 @@ public class TELandiaAltarCore extends TELandiaAltarItemHolder {
 		}
 	}
 	
+	public boolean isBlockInRightPosition() {
+		return this.hasWorld() && this.world.provider.getDimension() == Config.landiaDimensionID
+				&& this.world.canBlockSeeSky(pos);
+	}
+	
+	public boolean doRenderBeam() {
+		return isBlockInRightPosition() && !ish.getStackInSlot(0).isEmpty();
+	}
+	
 	public PedestalResult getPedestals() {
-		/*
-		List<TELandiaAltarPedestal> pedestals = Utils.getTileEntitiesWithinAABB(world, TELandiaAltarPedestal.class,
-				Utils.AABBfromVecs(new Vec3d(pos).subtract(MAX_PYRAMID_SIZE, MAX_PYRAMID_SIZE, MAX_PYRAMID_SIZE),
-						new Vec3d(pos).add(MAX_PYRAMID_SIZE+1, MAX_PYRAMID_SIZE+1, MAX_PYRAMID_SIZE+1)));
-						*/
+		if (!isBlockInRightPosition()) {
+			return new PedestalResult(0, Collections.emptyList());
+		}
+		
 		List<TELandiaAltarPedestal> pedestals = new ArrayList<>();
 		int level = 0;
 		levelCheck:
@@ -57,5 +71,19 @@ public class TELandiaAltarCore extends TELandiaAltarItemHolder {
 			++level;
 		}
 		return new PedestalResult(level, pedestals);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+		return INFINITE_EXTENT_AABB;
+	}
+
+	@Override
+	public void update() {
+		if (oldDoRenderBeam != doRenderBeam()) {
+			oldDoRenderBeam = doRenderBeam();
+			world.checkLightFor(EnumSkyBlock.BLOCK, pos);
+		}
 	}
 }

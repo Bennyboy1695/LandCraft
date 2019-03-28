@@ -192,4 +192,13 @@ public class BlockLandiaAltar extends Block implements IMetaBlockName {
 		}
 		return super.getComparatorInputOverride(blockState, worldIn, pos);
 	}
+	
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TELandiaAltarCore && ((TELandiaAltarCore)te).doRenderBeam()) {
+			return 15;
+		}
+		return super.getLightValue(state, world, pos);
+	}
 }

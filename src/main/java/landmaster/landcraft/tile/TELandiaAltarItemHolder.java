@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.items.*;
 
 public class TELandiaAltarItemHolder extends TileEntity {
-	private final ItemStackHandler ish = new ItemStackHandler(1) {
+	protected final ItemStackHandler ish = new ItemStackHandler(1) {
 		@Override
 		public int getSlotLimit(int slot) {
 			return 1;

@@ -39,6 +39,9 @@ public class LandiaWeather extends WorldSavedData {
 	}
 	
 	public boolean isClear() { return this.clear; }
-	public void setClear(boolean clear) { this.clear = clear; }
+	public void setClear(boolean clear) {
+		this.clear = clear;
+		this.markDirty();
+	}
 	
 }

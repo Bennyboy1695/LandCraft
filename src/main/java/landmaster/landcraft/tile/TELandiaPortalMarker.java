@@ -6,7 +6,6 @@ import javax.annotation.*;
 
 import org.apache.commons.lang3.tuple.*;
 
-import gnu.trove.set.hash.*;
 import landmaster.landcore.api.*;
 import landmaster.landcraft.block.*;
 import landmaster.landcraft.config.*;
@@ -25,7 +24,7 @@ import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.relauncher.*;
 
 public class TELandiaPortalMarker extends TileEntity implements ITickable {
-	private final Set<UUID> already = new THashSet<>();
+	private final Set<UUID> already = new HashSet<>();
 	
 	static class ClRes {
 		public @Nullable TELandiaPortalMarker tile;
@@ -80,9 +79,10 @@ public class TELandiaPortalMarker extends TileEntity implements ITickable {
 	public void update() {
 		if (getWorld().isRemote) return;
 		if (getWorld().getBlockState(pos).getValue(BlockLandiaPortalMarker.ACTIVATED)) {
-			List<Entity> ents = getWorld().getEntitiesWithinAABB(Entity.class, Utils.AABBfromVecs(
+			AxisAlignedBB aabb = Utils.AABBfromVecs(
 					portalLBound().subtract(0.2, 0, 0.2),
-					new Vec3d(pos).add(0.5+0.2, -0.01, 0.5+0.2)));
+					new Vec3d(pos).add(0.5+0.2, -0.01, 0.5+0.2));
+			List<Entity> ents = getWorld().getEntitiesWithinAABB(Entity.class, aabb);
 			if (!ents.isEmpty()) {
 				int dimID = getWorld().provider.getDimension() != Config.landiaDimensionID
 						? Config.landiaDimensionID : 0;
