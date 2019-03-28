@@ -156,6 +156,7 @@ info.breeder.jei.product=Output (in 1/32 of a thorium ingot): %d
 info.pot.jei.energy_and_time=%d RF/t (%d t)
 
 info.altar.jei.death_trigger=(Kill a(n) %s)
+info.altar.jei.min_size=(Minimum pyramid size: %d)
 
 # TOOLTIPS
 

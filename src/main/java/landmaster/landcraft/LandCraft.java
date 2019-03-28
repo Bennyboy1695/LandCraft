@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.*;
 
 import landmaster.landcore.api.*;
 import landmaster.landcore.api.item.*;
@@ -20,7 +19,6 @@ import landmaster.landcraft.util.*;
 import landmaster.landcraft.world.*;
 import landmaster.landcraft.world.gen.*;
 import net.minecraft.block.*;
-import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -345,6 +343,7 @@ public class LandCraft {
 	
 	@SubscribeEvent
 	public static void addRecipes(RegistryEvent.Register<IRecipe> event) {
+		/*
 		LandiaAltarRecipes.addEntityTriggerRecipe(new LandiaAltarRecipes.StandardAltarRecipeEntityDeathTrigger(
 				Pair.of(new ItemStack(Items.NETHER_STAR), 2),
 				ItemStackEquivs.EQUAL_ITEMS,
@@ -353,7 +352,7 @@ public class LandCraft {
 						ItemStackEquivs.equalItemsList(new ItemStack(LandCraftContent.bun_rieu, 1, 1))
 						),
 				EntityZombie.class
-				));
+				));*/
 		
 		BreederFeedstock.addOreDict("ingotIron", 16, 200);
 		BreederFeedstock.addOreDict("ingotTungsten", 64, 1000);
@@ -515,6 +514,37 @@ public class LandCraft {
 					'z', "gemLapis")
 					.setRegistryName(LandCraftContent.wrench.getRegistryName()));
 		}
+		
+		ResourceLocation landiaAltarCore = Tools.underscoreSuffix(LandCraftContent.landia_altar.getRegistryName(), "core"),
+				landiaAltarMaterial = Tools.underscoreSuffix(LandCraftContent.landia_altar.getRegistryName(), "material"),
+				landiaAltarPedestal = Tools.underscoreSuffix(LandCraftContent.landia_altar.getRegistryName(), "pedestal");
+		event.getRegistry().register(new ShapedOreRecipe(landiaAltarCore,
+				LandCraftContent.landia_altar,
+				" W ", "rTp",
+				'W', LandCraftContent.weather_wand,
+				'r', new ItemStack(LandCraftContent.bun_rieu, 1, 1),
+				'T', LandCraftContent.landia_tower,
+				'p', new ItemStack(LandCraftContent.pho, 1, 1))
+				.setRegistryName(landiaAltarCore));
+		event.getRegistry().register(new ShapedOreRecipe(landiaAltarMaterial,
+				new ItemStack(LandCraftContent.landia_altar, 3, 1),
+				"lnl", "gkm", "fcf",
+				'n', "netherStar",
+				'l', "ingotLandium",
+				'g', "ingotGarfax",
+				'k', "ingotKelline",
+				'm', "ingotMorganine",
+				'f', Items.CHORUS_FRUIT_POPPED,
+				'c', Blocks.CHORUS_FLOWER)
+				.setRegistryName(landiaAltarMaterial));
+		event.getRegistry().register(new ShapedOreRecipe(landiaAltarPedestal,
+				new ItemStack(LandCraftContent.landia_altar, 1, 2),
+				" D ", "rTp",
+				'D', Items.DRAGON_BREATH,
+				'r', new ItemStack(LandCraftContent.bun_rieu, 1, 1),
+				'T', LandCraftContent.landia_tower,
+				'p', new ItemStack(LandCraftContent.pho, 1, 1))
+				.setRegistryName(landiaAltarPedestal));
 	}
 	
 	@EventHandler

@@ -34,5 +34,8 @@ public class StandardAltarRecipeEntityDeathTriggerJEI extends LandiaAltarRecipeJ
 		minecraft.fontRenderer.drawString(
 				I18n.format("info.altar.jei.death_trigger", entityLocName),
 				27, 12 + 18*((recipe.getMaxNumItems()+6)/7), 0x0000FF);
+		minecraft.fontRenderer.drawString(
+				I18n.format("info.altar.jei.min_size", recipe.output.getRight()),
+				5, 12 + 22 + 18*((recipe.getMaxNumItems()+6)/7), 0xFF00FF);
 	}
 }
