@@ -51,7 +51,7 @@ public class LandCraftJEI implements IModPlugin {
 		
 		registry.handleRecipes(LandiaAltarRecipes.StandardAltarRecipeEntityDeathTrigger.class,
 				StandardAltarRecipeEntityDeathTriggerJEI::new, LandiaAltarRecipeCategory.UID);
-		registry.addRecipes(LandiaAltarRecipes.getEntityTriggerList(), LandiaAltarRecipeCategory.UID);
+		registry.addRecipes(LandiaAltarRecipes.getEntityDeathTriggerList(), LandiaAltarRecipeCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(LandCraftContent.landia_altar), LandiaAltarRecipeCategory.UID);
 	}
 	

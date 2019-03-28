@@ -45,11 +45,11 @@ public class LandiaAltarRecipes {
 	
 	public static class StandardAltarRecipeEntityDeathTrigger implements IAltarRecipeEntityDeathTrigger {
 		public final Pair<ItemStack, Integer> output;
-		public final Equivalence<ItemStack> equiv;
+		public final Equivalence<? super ItemStack> equiv;
 		public final List<Collection<Equivalence.Wrapper<ItemStack>>> stackMatchList;
-		public final Class<? extends EntityLivingBase> entityClass;
+		public final Class<? extends Entity> entityClass;
 		
-		public StandardAltarRecipeEntityDeathTrigger(Pair<ItemStack, Integer> output, Equivalence<ItemStack> equiv, List<Collection<Equivalence.Wrapper<ItemStack>>> stackMatchList, Class<?  extends EntityLivingBase> entityClass) {
+		public StandardAltarRecipeEntityDeathTrigger(Pair<ItemStack, Integer> output, Equivalence<? super ItemStack> equiv, List<Collection<Equivalence.Wrapper<ItemStack>>> stackMatchList, Class<? extends Entity> entityClass) {
 			this.output = output;
 			this.equiv = equiv;
 			this.stackMatchList = stackMatchList;
@@ -102,8 +102,8 @@ public class LandiaAltarRecipes {
 		entityTriggerList.add(recipe);
 	}
 	
-	public static Collection<IAltarRecipeEntityDeathTrigger> getEntityTriggerList() {
-		return Collections.unmodifiableList(entityTriggerList);
+	public static Collection<IAltarRecipeEntityDeathTrigger> getEntityDeathTriggerList() {
+		return entityTriggerList;
 	}
 	
 	@SubscribeEvent

@@ -29,4 +29,14 @@ public class Machines {
 	public static void removePotRecipe(IIngredient output) {
 		CraftTweakerAPI.apply(new RemovePotRecipeAction(output));
 	}
+	
+	@ZenMethod
+	public static void addAltarRecipeEntityDeathTrigger(IItemStack output, int minPyramidSize, IIngredient[] ingredients, String entity) {
+		CraftTweakerAPI.apply(new AddAltarRecipeEntityDeathTriggerAction(output, minPyramidSize, ingredients, entity));
+	}
+	
+	@ZenMethod
+	public static void removeAltarRecipeEntityDeathTrigger(IIngredient output) {
+		CraftTweakerAPI.apply(new RemoveAltarRecipeEntityDeathTriggerAction(output));
+	}
 }

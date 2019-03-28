@@ -144,12 +144,18 @@ public class BlockLandiaAltar extends Block implements IMetaBlockName {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof TELandiaAltarItemHolder) {
 				if (!worldIn.isRemote) {
-					IItemHandlerModifiable handler = (IItemHandlerModifiable)te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-					ItemStack stack = playerIn.getHeldItem(hand);
-					if (stack.isEmpty()) {
-						playerIn.setHeldItem(hand, handler.extractItem(0, 1, false));
+					IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+					if (handler.getStackInSlot(0).isEmpty()) {
+						playerIn.setHeldItem(hand, handler.insertItem(0, playerIn.getHeldItem(hand), false));
 					} else {
-						playerIn.setHeldItem(hand, handler.insertItem(0, stack, false));
+						ItemStack playerStack = playerIn.getHeldItem(hand);
+						ItemStack handlerStack = handler.extractItem(0, 1, true).copy();
+						if ( (playerStack.isEmpty() || ItemHandlerHelper.canItemStacksStack(handlerStack, playerStack))
+								&& handlerStack.getCount()+playerStack.getCount() <= handlerStack.getMaxStackSize()) {
+							handlerStack.grow(playerStack.getCount());
+							handler.extractItem(0, 1, false);
+							playerIn.setHeldItem(hand, handlerStack);
+						}
 					}
 				}
 				return true;
@@ -169,5 +175,21 @@ public class BlockLandiaAltar extends Block implements IMetaBlockName {
 			}
 		}
 		super.breakBlock(world, pos, state);
+	}
+	
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state) {
+		return state.getValue(PART) != Part.MATERIAL;
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te instanceof TELandiaAltarItemHolder) {
+			ItemStack stack = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(0);
+			return stack.isEmpty() ? 0 : 15;
+		}
+		return super.getComparatorInputOverride(blockState, worldIn, pos);
 	}
 }
