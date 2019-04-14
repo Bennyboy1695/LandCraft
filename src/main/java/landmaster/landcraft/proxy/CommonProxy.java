@@ -43,4 +43,7 @@ public class CommonProxy {
 	
 	public void setCustomStateMapper(Block block, Function<Block, Collection<Map.Entry<IBlockState, String>>> mapper) {
 	}
+	
+	public void initOBJLoader() {
+	}
 }

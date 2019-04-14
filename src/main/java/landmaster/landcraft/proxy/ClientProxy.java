@@ -22,6 +22,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.model.*;
+import net.minecraftforge.client.model.obj.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.fml.client.registry.*;
 import net.minecraftforge.fml.common.eventhandler.*;
@@ -97,6 +98,11 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomStateMapper(block, mapper.andThen(coll -> coll.stream()
 				.collect(Collectors.toMap(Map.Entry::getKey,
 						pair -> new ModelResourceLocation(pair.getValue()))))::apply);
+	}
+	
+	@Override
+	public void initOBJLoader() {
+		OBJLoader.INSTANCE.addDomain(ModInfo.MODID);
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOW)

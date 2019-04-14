@@ -8,7 +8,6 @@ import javax.annotation.*;
 
 import com.google.common.collect.*;
 
-import gnu.trove.set.hash.*;
 import landmaster.landcore.entity.*;
 import landmaster.landcraft.entity.ai.*;
 import net.minecraft.entity.*;
@@ -32,7 +31,7 @@ public class EntityBigBrother extends EntityMob {
 	
 	public static final ResourceLocation LOOT = new ResourceLocation("landcraft:entities/big_brother");
 	
-	private final Set<UUID> henchmen = new THashSet<>();
+	private final Set<UUID> henchmen = new HashSet<>();
 	private static final String HENCHMEN_NBT = "OrwellHenchmen";
 	
 	public static final float ATK_RANGE = 80.0f;
@@ -74,7 +73,7 @@ public class EntityBigBrother extends EntityMob {
 		final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 		return henchmen.stream()
 				.map(server::getEntityFromUuid)
-				.collect(Collectors.toCollection(THashSet::new));
+				.collect(Collectors.toCollection(HashSet::new));
 	}
 	
 	protected void purgeHenchmen() {

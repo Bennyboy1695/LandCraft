@@ -26,7 +26,6 @@ import net.minecraft.item.crafting.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
-import net.minecraftforge.client.model.obj.*;
 import net.minecraftforge.common.util.*;
 import net.minecraftforge.event.*;
 import net.minecraftforge.fluids.*;
@@ -320,7 +319,7 @@ public class LandCraft {
 		(config = new Config(event)).sync();
 		LCLog.log = event.getModLog();
 		
-		OBJLoader.INSTANCE.addDomain(ModInfo.MODID);
+		proxy.initOBJLoader();
 		
 		proxy.initEntities();
 		
